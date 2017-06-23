@@ -1,0 +1,15 @@
+{
+	"providers": {
+		"aws": [
+			"aws_instance",
+			"aws_security_group"
+		],
+		"chef": [
+			"chef_data_bag",
+			"chef_data_bag_item",
+			"chef_environment",
+			"chef_node",
+			"chef_role"
+		]
+	}
+}
