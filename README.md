@@ -7,5 +7,5 @@ Resources arguments are provided by an API.
 
 ## Contributors
 
-- [Florian Romieu](romieuflorian@gmail.com)
+- Florian Romieu [romieuflorian@gmail.com]
 - [Julien Levasseur](https://github.com/julienlevasseur)
