@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// Route definition
 type Route struct {
 	Name		string
 	Method		string
@@ -11,6 +12,7 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+// Routes
 var routes []Route = []Route{
 	Route{
 		"Index",
@@ -31,9 +33,21 @@ var routes []Route = []Route{
 		ProvidersAWS,
 	},
 	Route{
+		"ResourceAWS",
+		"GET",
+		"/providers/aws/{ResourceName}",
+		ResourceAWS,
+	},
+	Route{
 		"ProvidersChef",
 		"GET",
 		"/providers/chef",
 		ProvidersChef,
+	},
+	Route{
+		"ResourceChef",
+		"GET",
+		"/providers/chef/{ResourceName}",
+		ResourceChef,
 	},
 }

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 )
 
+// Define the index fuction
 func Index(w http.ResponseWriter, r *http.Request) {
 	index_routes := []string{"providers"}
 
@@ -15,7 +16,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Define the providers index fuction
 func ProvidersIndex(w http.ResponseWriter, r *http.Request) {
+	// Actually, the only two supported providers are : aws, chef
 	providers := []Provider{
 		Provider{Name: "aws"},
 		Provider{Name: "chef"},

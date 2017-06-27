@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// NewRouter handle the routing for the api
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)

@@ -5,6 +5,7 @@ import (
     "net/http"
 )
 
+// main function that instantiate a router for the REST routes handling
 func main() {
 
 	router := NewRouter()
