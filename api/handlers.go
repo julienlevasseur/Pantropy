@@ -7,8 +7,6 @@ import (
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	index_routes := []string{"providers"}
-	//index_routes := make(map[string][]string)
-	//index_routes["result"] = append(index_routes["result"], "providers")
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
