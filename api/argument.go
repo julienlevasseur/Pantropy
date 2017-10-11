@@ -15,4 +15,3 @@ type Option struct {
 	Required	bool 	`json:"required"`
 	Description string	`json:"description"`
 }
-

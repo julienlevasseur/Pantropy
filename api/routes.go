@@ -50,4 +50,16 @@ var routes []Route = []Route{
 		"/providers/chef/{ResourceName}",
 		ResourceChef,
 	},
+	Route{
+		"ProvidersOpenstack",
+		"GET",
+		"/providers/openstack",
+		ProvidersOpenstack,
+	},
+	Route{
+		"ResourceOpenstack",
+		"GET",
+		"/providers/openstack/{ResourceName}",
+		ResourceOpenstack,
+	},
 }

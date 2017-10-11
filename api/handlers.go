@@ -22,6 +22,7 @@ func ProvidersIndex(w http.ResponseWriter, r *http.Request) {
 	providers := []Provider{
 		Provider{Name: "aws"},
 		Provider{Name: "chef"},
+		Provider{Name: "openstack"},
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
