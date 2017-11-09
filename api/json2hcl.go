@@ -18,13 +18,6 @@ func Json2Hcl(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "plain/text; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	fmt.Println("Request received.")
-
-	type Data struct {
-		key string
-		value string
-	}
-
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)

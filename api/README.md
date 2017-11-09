@@ -11,7 +11,7 @@ The Pantropy API expose 2 types of entities :
 
 The role of the getter routes is to provide a declarative structure for the interface forms.
 
-For example, when a user want to create a chef_node resource, the frontend make an HTTP request to `/provider/chef/chef_node` to retrieve these data :
+For example, when a user want to create a chef_node resource, the frontend make an HTTP request to `/v1/provider/chef/chef_node` to retrieve these data :
 
 ```javascript
 {
@@ -67,11 +67,11 @@ The role of the setter routes is to provide a feature to generate an HCL file fr
 
 Verb | Route | Description
 ---- | ----- | -----------
-GET `/` | List the supported features
-GET `/providers` | List the supported providers
-GET `/providers/{provider_name}` | List the provider's resources
-GET `/providers/{provider_name}/{resource_name}` | Return the specific resource
-POST `/json2hcl` | Return HCL version of the JSON passed in data
+GET  | `/v1/` | List the supported features
+GET  | `/v1/providers` | List the supported providers
+GET  | `/v1/providers/{provider_name}` | List the provider's resources
+GET  | `/v1/providers/{provider_name}/{resource_name}` | Return the specific resource
+POST | `/v1/json2hcl` | Return HCL version of the JSON passed in data
 
 ## Examples
 
