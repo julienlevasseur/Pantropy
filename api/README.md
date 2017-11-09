@@ -65,9 +65,28 @@ The role of the setter routes is to provide a feature to generate an HCL file fr
 
 ## Routes
 
-Route | Description
------ | -----------
-`/` | List the supported features
-`/providers` | List the supported providers
-`/providers/{provider_name}` | List the provider's resources
-`/providers/{provider_name}/{resource_name}` | Return the specific resource
+Verb | Route | Description
+---- | ----- | -----------
+GET `/` | List the supported features
+GET `/providers` | List the supported providers
+GET `/providers/{provider_name}` | List the provider's resources
+GET `/providers/{provider_name}/{resource_name}` | Return the specific resource
+POST `/json2hcl` | Return HCL version of the JSON passed in data
+
+## Examples
+
+### json2hcl
+
+Request:
+```bash
+curl -X POST http://127.0.0.1:8080/v1/json2hcl \
+-H "Content-Type: application/json" \
+-d '{"variable":{"ami":{"default": "foo"}}}'
+```
+
+Reply:
+```
+"variable" "ami" {
+  "default" = "foo"
+}
+```
