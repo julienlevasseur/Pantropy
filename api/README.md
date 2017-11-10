@@ -1,5 +1,7 @@
 # Pantropy API
 
+![Build Status](https://travis-ci.org/julienlevasseur/Pantropy.svg?branch=master)
+
 ## Overview
 
 The Pantropy API expose 2 types of entities :
