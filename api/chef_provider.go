@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var chef_resources = map[string]Resource{
+var chefResources = map[string]Resource{
 	"chef_data_bag": Resource{
 		Name: "chef_data_bag",
 		Arguments: []Argument{
@@ -110,18 +110,18 @@ var chef_resources = map[string]Resource{
 	},
 }
 
-// Define the chef provider function
+// ProvidersChef: Define the chef provider function
 func ProvidersChef(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(chef_resources); err != nil {
+	if err := json.NewEncoder(w).Encode(chefResources); err != nil {
 		panic(err)
 	}
 }
 
-// Define the chef resource function
+// ResourceChef: Define the chef resource function
 func ResourceChef(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
@@ -130,7 +130,7 @@ func ResourceChef(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(chef_resources[ResourceName]); err != nil {
+	if err := json.NewEncoder(w).Encode(chefResources[ResourceName]); err != nil {
 		panic(err)
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var aws_resources = map[string]Resource{
+var awsResources = map[string]Resource{
 	"aws_provider": Resource{
 		Name: "aws_provider",
 		Arguments: []Argument{
@@ -368,18 +368,18 @@ var aws_resources = map[string]Resource{
 	},
 }
 
-// Define the aws provider function
+// ProvidersAWS: Define the aws provider function
 func ProvidersAWS(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(aws_resources); err != nil {
+	if err := json.NewEncoder(w).Encode(awsResources); err != nil {
 		panic(err)
 	}
 }
 
-// Define the aws resource function
+// ResourceAWS: Define the aws resource function
 func ResourceAWS(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
@@ -388,7 +388,7 @@ func ResourceAWS(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(aws_resources[ResourceName]); err != nil {
+	if err := json.NewEncoder(w).Encode(awsResources[ResourceName]); err != nil {
 		panic(err)
 	}
 }

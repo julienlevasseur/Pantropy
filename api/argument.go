@@ -1,6 +1,6 @@
 package main
 
-// Resource Argument definition
+// Argument definition
 type Argument struct {
 	Name 		string 		`json:"name"`
 	Required	bool 		`json:"required"`
@@ -8,7 +8,7 @@ type Argument struct {
 	Options 	[]Option 	`json:"options"`
 }
 
-// Argument Option definition
+// Option definition
 type Option struct {
 	Name 		string 	`json:"name"`
 	Value 		string 	`json:"value"`

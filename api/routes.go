@@ -13,7 +13,7 @@ type Route struct {
 }
 
 // Routes
-var routes []Route = []Route{
+var routes = []Route{
 	Route{
 		"Index",
 		"GET",
@@ -66,6 +66,6 @@ var routes []Route = []Route{
 		"Json2Hcl",
 		"POST",
 		"/v1/json2hcl",
-		Json2Hcl,
+		JSON2Hcl,
 	},
 }

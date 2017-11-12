@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var openstack_resources = map[string]Resource{
+var openstackResources = map[string]Resource{
 	"openstack_compute_flavor_v2": Resource{
 		Name: "openstack_compute_flavor_v2",
 		Arguments: []Argument{
@@ -467,18 +467,18 @@ var openstack_resources = map[string]Resource{
 	},
 }
 
-// Define the openstack provider function
+// ProvidersOpenstack: Define the openstack provider function
 func ProvidersOpenstack(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(openstack_resources); err != nil {
+	if err := json.NewEncoder(w).Encode(openstackResources); err != nil {
 		panic(err)
 	}
 }
 
-// Define the openstack resource function
+// ResourceOpenstack: Define the openstack resource function
 func ResourceOpenstack(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
@@ -487,7 +487,7 @@ func ResourceOpenstack(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(openstack_resources[ResourceName]); err != nil {
+	if err := json.NewEncoder(w).Encode(openstackResources[ResourceName]); err != nil {
 		panic(err)
 	}
 }

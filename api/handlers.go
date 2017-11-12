@@ -5,18 +5,18 @@ import (
 	"encoding/json"
 )
 
-// Define the index fuction
+// Index: Define the index fuction
 func Index(w http.ResponseWriter, r *http.Request) {
-	index_routes := []string{"providers"}
+	indexRoutes := []string{"providers"}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(index_routes); err != nil {
+	if err := json.NewEncoder(w).Encode(indexRoutes); err != nil {
 		panic(err)
 	}
 }
 
-// Define the providers index fuction
+// ProvidersIndex: Define the providers index fuction
 func ProvidersIndex(w http.ResponseWriter, r *http.Request) {
 	// Actually, the only two supported providers are : aws, chef
 	providers := []Provider{

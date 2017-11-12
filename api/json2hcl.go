@@ -10,7 +10,8 @@ import (
 
 var err error
 
-func Json2Hcl(w http.ResponseWriter, r *http.Request) {
+// JSON2Hcl convert JSON to HCL
+func JSON2Hcl(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "plain/text; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
