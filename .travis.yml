@@ -8,3 +8,6 @@ go:
 
 env:
   - TEST_DIR=api
+
+script:
+  - go test -v ./api/...
