@@ -110,7 +110,7 @@ var chefResources = map[string]Resource{
 	},
 }
 
-// ProvidersChef: Define the chef provider function
+// ProvidersChef : Define the chef provider function
 func ProvidersChef(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -121,7 +121,7 @@ func ProvidersChef(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ResourceChef: Define the chef resource function
+// ResourceChef : Define the chef resource function
 func ResourceChef(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)

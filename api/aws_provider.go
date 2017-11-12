@@ -368,7 +368,7 @@ var awsResources = map[string]Resource{
 	},
 }
 
-// ProvidersAWS: Define the aws provider function
+// ProvidersAWS : Define the aws provider function
 func ProvidersAWS(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -379,7 +379,7 @@ func ProvidersAWS(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ResourceAWS: Define the aws resource function
+// ResourceAWS : Define the aws resource function
 func ResourceAWS(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)

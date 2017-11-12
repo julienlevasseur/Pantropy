@@ -467,7 +467,7 @@ var openstackResources = map[string]Resource{
 	},
 }
 
-// ProvidersOpenstack: Define the openstack provider function
+// ProvidersOpenstack : Define the openstack provider function
 func ProvidersOpenstack(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -478,7 +478,7 @@ func ProvidersOpenstack(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ResourceOpenstack: Define the openstack resource function
+// ResourceOpenstack : Define the openstack resource function
 func ResourceOpenstack(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
