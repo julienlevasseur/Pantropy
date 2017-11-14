@@ -1,5 +1,7 @@
 # Pantropy
 
+[![Coverage Status](https://coveralls.io/repos/github/julienlevasseur/Pantropy/badge.svg?branch=master)](https://coveralls.io/github/julienlevasseur/Pantropy?branch=master)
+
 A human friendly webui to Hashicorp Terraform.
 
 Pantropy offer a Web interface to handling Terraform resources.

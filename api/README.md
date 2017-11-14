@@ -2,6 +2,7 @@
 
 ![Build Status](https://travis-ci.org/julienlevasseur/Pantropy.svg?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e04ed0b0adb438a86304d00abea4342)](https://www.codacy.com/app/julienlevasseur/Pantropy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=julienlevasseur/Pantropy&amp;utm_campaign=Badge_Grade)
+[![Coverage Status](https://coveralls.io/repos/github/julienlevasseur/Pantropy/badge.svg?branch=master)](https://coveralls.io/github/julienlevasseur/Pantropy?branch=master)
 
 ## Overview
 
