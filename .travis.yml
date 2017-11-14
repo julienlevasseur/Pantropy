@@ -1,13 +1,18 @@
 language: go
-
 go:
-  - 1.6
-  - 1.7
-  - 1.8
-  - 1.9
-
+- 1.6
+- 1.7
+- 1.8
+- 1.9
 env:
+  matrix:
   - TEST_DIR=api
+  global:
+    secure: ya7fP6QIw1YxbRrP5od3N59D2BwusvQVPPt9eG/FfkHVzbbwO8ZC/lrb+C9cXYjhy76BhELk8+RkM7Ji62aPfmIe8AavYw7mdJHj41ex64KzrRe1GuIUMBz10wR5i7g2fksU4PQYnQpZy1CbPPvq+T+WzcGNfGrdhiKKfuAvKHfanvSD+7dlRvjMzgCc5eFdVfo2a2Ct6Uo3i6LGBbTu0si3s8/su3wcblUwJcj6tRwmH+zg6FzgoMVbALQK1a76nW1N1tjXF/fXJJUM4ycRowsCwtN8g+N+j5ppZXmzXMg7YxEerVQJywr1+XMQgp9UZCZ2ZP61sN300x1xVTOCE08ZaTrTCzNWOoUOy+3eFrJ1XX/8DD2wOiPYI86Jx9xYW8An6J67rt2ROCMgpAp9xVpMDNW1MDzGOTY34ntrSRQV/yzaBfHhqsvAloj8wB/17vawbPOIx+TirHdxKo2mVytKNYiPSp/yV5+4SJJ2oZmzxLNxmalkgE+o3CiahY+p56QREG7fMF4CDGxaG7ecNilt22jF3uEGFjhqEee+E/eVN+P+scugDj/WftMmXYtIDq8rKCwf143mWFWCiC7jaOBTh4H8zHtQ3aVafgjv6VfI74BQBS+xhqDa7CLkfJs9VMG2Aq2aF28OzyHKCCHdsgZjVRWEpjsrfNVYOU6HZXQ=
 
+before_install:
+  -go get golang.org/x/tools/cmd/cover
+  - go get github.com/mattn/goveralls
 script:
+  - "$GOPATH/bin/goveralls -service=travis-ci"
   - go test -v ./api/...
