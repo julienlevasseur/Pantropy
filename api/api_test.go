@@ -9,14 +9,6 @@ import (
 	"github.com/fatih/color"
 )
 
-func displayStatusOK(route string, status int){
-	fmt.Printf(color.GreenString("%v%v%v%v\n"), "[OK] ", route, " return: ", status)
-}
-
-func displayBodyOK(route string, body string){
-	fmt.Printf(color.GreenString("%v%v%v%v\n"), "[OK] ", route, " body: ", body)
-}
-
 func TestIndexRoute(t *testing.T) {
 	route := "/v1"
 	req, err := http.NewRequest("GET", route, nil)
