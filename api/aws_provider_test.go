@@ -1,10 +1,12 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 	"net/http"
 	"net/http/httptest"
 	"github.com/gorilla/mux"
+	"github.com/fatih/color"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -37,5 +39,15 @@ func TestResAWS(t *testing.T) {
 	assert.Equal(t, 200, response.Code, "OK response is expected")
 	if response.Code == http.StatusOK {
 		displayStatusOK("ResourceAWS", response.Code)
+	}
+
+	awsRes := awsResources
+	if string(reflect.TypeOf(awsRes).Kind().String()) == "map" {
+		displayTypeOK("awsResources", string(reflect.TypeOf(awsRes).Kind().String()))
+	} else {
+		t.Errorf(color.RedString("wrong awsResources type: got %v want %v"),
+			string(reflect.TypeOf(awsRes).Kind().String()),
+			"map",
+		)
 	}
 }
