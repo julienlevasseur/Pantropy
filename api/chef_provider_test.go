@@ -26,16 +26,16 @@ func TestProvidersChef(t *testing.T) {
 	}
 
 	defer func() {
-        if r := recover(); r == nil {
-            t.Errorf("ProvidersChef did not panic")
-        } else {
-        	PrintGreen("[OK] ProvidersChef panic correctly")
-        }
-    }()
+		if r := recover(); r == nil {
+			t.Errorf("ProvidersChef did not panic")
+		} else {
+			PrintGreen("[OK] ProvidersChef panic correctly")
+		}
+	}()
 
-    var w http.ResponseWriter
-    var r *http.Request
-    ProvidersChef(w, r)
+	var w http.ResponseWriter
+	var r *http.Request
+	ProvidersChef(w, r)
 }
 
 func RouterResChefTest(route string, method string) *mux.Router {
@@ -64,14 +64,14 @@ func TestResChef(t *testing.T) {
 	}
 
 	defer func() {
-        if r := recover(); r == nil {
-            t.Errorf("ResourceChef did not panic")
-        } else {
-        	PrintGreen("[OK] ResourceChef panic correctly")
-        }
-    }()
+		if r := recover(); r == nil {
+			t.Errorf("ResourceChef did not panic")
+		} else {
+			PrintGreen("[OK] ResourceChef panic correctly")
+		}
+	}()
 
-    var w http.ResponseWriter
-    var r *http.Request
-    ResourceChef(w, r)
+	var w http.ResponseWriter
+	var r *http.Request
+	ResourceChef(w, r)
 }
