@@ -24,7 +24,9 @@ func TestProvidersAWS(t *testing.T) {
 	if response.Code == http.StatusOK {
 		displayStatusOK("ProvidersAWS", response.Code)
 	}
+}
 
+func TestProvidersAWSPanic(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("ProvidersAWS did not panic")
@@ -62,7 +64,9 @@ func TestResAWS(t *testing.T) {
 			"map",
 		)
 	}
+}
 
+func TestResAWSPanic(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("ResourceAWS did not panic")
