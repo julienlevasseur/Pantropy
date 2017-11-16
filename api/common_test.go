@@ -16,3 +16,7 @@ func displayBodyOK(route string, body string){
 func displayTypeOK(obj string, obj_type string){
 	fmt.Printf(color.GreenString("%v%v%v%v\n"), "[OK] ", obj, " type: ", obj_type)
 }
+
+func PrintGreen(content string){
+	fmt.Printf(color.GreenString("%v\n"), content)
+}

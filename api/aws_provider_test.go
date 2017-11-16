@@ -24,6 +24,18 @@ func TestProvidersAWS(t *testing.T) {
 	if response.Code == http.StatusOK {
 		displayStatusOK("ProvidersAWS", response.Code)
 	}
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("ProvidersAWS did not panic")
+		} else {
+			PrintGreen("[OK] ProvidersAWS panic correctly")
+		}
+	}()
+
+	var w http.ResponseWriter
+	var r *http.Request
+	ProvidersAWS(w, r)
 }
 
 func RouterResAWSTest(route string, method string) *mux.Router {
@@ -50,4 +62,16 @@ func TestResAWS(t *testing.T) {
 			"map",
 		)
 	}
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("ResourceAWS did not panic")
+		} else {
+			PrintGreen("[OK] ResourceAWS panic correctly")
+		}
+	}()
+
+	var w http.ResponseWriter
+	var r *http.Request
+	ResourceAWS(w, r)
 }
