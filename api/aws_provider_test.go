@@ -46,7 +46,7 @@ func RouterResAWSTest(route string, method string) *mux.Router {
 	return router
 }
 
-func TestResAWS(t *testing.T) {
+func TestResourceAWS(t *testing.T) {
 	request, _ := http.NewRequest("GET", "/v1/providers/aws/aws_instance", nil)
 	response := httptest.NewRecorder()
 	RouterResAWSTest("/v1/providers/aws/aws_instance", "GET").ServeHTTP(response, request)
@@ -66,15 +66,14 @@ func TestResAWS(t *testing.T) {
 	}
 }
 
-func TestResAWSPanic(t *testing.T) {
+func TestResourceAWSFail(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
-			t.Errorf("ResourceAWS did not panic")
+			t.Errorf("TestResourceAWSFail should have panicked!")
 		} else {
 			PrintGreen("[OK] ResourceAWS panic correctly")
 		}
 	}()
-
 	var w http.ResponseWriter
 	var r *http.Request
 	ResourceAWS(w, r)

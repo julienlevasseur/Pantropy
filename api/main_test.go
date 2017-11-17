@@ -1,15 +1,13 @@
 package main
 
 import (
-	"reflect"
+	"os"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
 
 
-func TestMain(t *testing.T) {
-	router := NewRouter()
-	assert.Equal(t, "*mux.Router", string(reflect.TypeOf(router).String()),
-		"main did not return a *mux.Router type",
-	)
+func TestMain(m *testing.M) {
+	code := m.Run()
+	PrintGreen("[OK] main test successfull")
+	os.Exit(code)
 }
