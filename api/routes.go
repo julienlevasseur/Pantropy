@@ -68,4 +68,10 @@ var routes = []Route{
 		"/v1/json2hcl",
 		JSON2Hcl,
 	},
+	Route{
+		"DockerBuild",
+		"POST",
+		"/v1/docker/build",
+		DockerBuild,
+	},
 }

@@ -1,11 +1,58 @@
 package main
 
 import (
+    "io"
     "os"
     "fmt"
     "strings"
+    "net/http"
     "os/exec"
+    "archive/tar"
+    "bytes"
+    "io/ioutil"
+    "encoding/json"
+    "log"
+
+    "github.com/docker/docker/api/types"
+    "github.com/docker/docker/client"
+    "golang.org/x/net/context"
 )
+
+func downloadFile(url string) {
+    tokens := strings.Split(url, "/")
+    fileName := tokens[len(tokens)-1]
+
+    output, err := os.Create(fileName)
+    if err != nil {
+        fmt.Println("Error while creating", fileName, "-", err)
+        return
+    }
+    defer output.Close()
+
+    response, err := http.Get(url)
+    if err != nil {
+        fmt.Println("Error while downloading", url, "-", err)
+        return
+    }
+    defer response.Body.Close()
+
+    n, err := io.Copy(output, response.Body)
+    if err != nil {
+        fmt.Println("Error while downloading", url, "-", err)
+        return
+    }
+    fmt.Println(n)
+}
+
+func deleteFile(path string) {
+    os.Remove(path)
+}
+
+/*func tarFile(files []string) {
+    for _, file := range files  {
+        cmd := exec.Command(
+    }
+}*/
 
 func get_docker_creds() map[string]string {
     var docker_creds = map[string]string{
@@ -44,18 +91,70 @@ func docker_login(username string, password string) {
     }
 }
 
-func docker_build(dockerfile string, tag string) {
-    cmd := exec.Command(
-        "docker",
-        "build",
-        dockerfile,
-        "-t",
-        tag,
-    )
-    err := cmd.Run()
+func DockerBuild(w http.ResponseWriter, r *http.Request) {
+
+    body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
     if err != nil {
-        fmt.Println(err)
+        panic(err)
     }
+    defer r.Body.Close()
+
+    m := make(map[string]string)
+    json.Unmarshal(body, &m)
+
+    downloadFile(m["url"])
+
+    ctx := context.Background()
+    cli, err := client.NewEnvClient()
+    if err != nil {
+        log.Fatal(err, " :unable to init client")
+    }
+
+    buf := new(bytes.Buffer)
+    tw := tar.NewWriter(buf)
+    defer tw.Close()
+
+    dockerFile := "Dockerfile"
+    dockerFileReader, err := os.Open("Dockerfile")
+    if err != nil {
+        log.Fatal(err, " :unable to open Dockerfile")
+    }
+    readDockerFile, err := ioutil.ReadAll(dockerFileReader)
+    if err != nil {
+        log.Fatal(err, " :unable to read dockerfile")
+    }
+
+    tarHeader := &tar.Header{
+        Name: dockerFile,
+        Size: int64(len(readDockerFile)),
+    }
+    err = tw.WriteHeader(tarHeader)
+    if err != nil {
+        log.Fatal(err, " :unable to write tar header")
+    }
+    _, err = tw.Write(readDockerFile)
+    if err != nil {
+        log.Fatal(err, " :unable to write tar body")
+    }
+    dockerFileTarReader := bytes.NewReader(buf.Bytes())
+
+    imageBuildResponse, err := cli.ImageBuild(
+        ctx,
+        dockerFileTarReader,
+        types.ImageBuildOptions{
+            Context:    dockerFileTarReader,
+            Dockerfile: dockerFile,
+            Remove:     true})
+    if err != nil {
+        log.Fatal(err, " :unable to build docker image")
+    }
+    defer imageBuildResponse.Body.Close()
+    _, err = io.Copy(os.Stdout, imageBuildResponse.Body)
+    if err != nil {
+        log.Fatal(err, " :unable to read image build response")
+    }
+
+    deleteFile("Dockerfile")
 }
 
 func docker_push(tag string) {
