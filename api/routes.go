@@ -80,4 +80,10 @@ var routes = []Route{
 		"/v1/docker/build",
 		DockerBuild,
 	},
+	Route{
+		"DockerPush",
+		"POST",
+		"/v1/docker/push",
+		dockerPush,
+	},
 }

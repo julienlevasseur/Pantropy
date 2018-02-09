@@ -8,11 +8,11 @@ import (
     "fmt"
     "strings"
     "net/http"
-    "os/exec"
     "archive/tar"
     "bytes"
     "io/ioutil"
     "encoding/json"
+    "encoding/base64"
     "log"
 
     "github.com/docker/docker/api/types"
@@ -37,25 +37,6 @@ func downloadFile(url string) {
         return
     }
     defer response.Body.Close()
-
-    n, err := io.Copy(output, response.Body)
-    if err != nil {
-        fmt.Println("Error while downloading", url, "-", err)
-        return
-    }
-    fmt.Println(n)
-}
-
-func deleteFile(path string) {
-    os.Remove(path)
-}
-
-func get_docker_creds() map[string]string {
-    var docker_creds = map[string]string{
-        "username": os.Getenv("DOCKER_USERNAME"),
-        "password": os.Getenv("DOCKER_PASSWORD"),
-    }
-    return docker_creds
 }
 
 func dockerImageList(w http.ResponseWriter, r *http.Request) {
@@ -69,43 +50,33 @@ func dockerImageList(w http.ResponseWriter, r *http.Request) {
         panic(err)
     }
 
-    //for _, image := range images {
-    //    fmt.Println(image.ID)
-    //}
     if err := json.NewEncoder(w).Encode(images); err != nil {
         panic(err)
     }
 }
 
-// TODO : Implement it in Go
-func get_docker_image_id(tag string) string {
-    out, err := exec.Command(
-        "docker",
-        "image",
-        "ls",
-        "|grep",
-        strings.Split(tag, ":")[0],
-    ).Output()
+func getDockerImageId(tag string) string {
+    cli, err := client.NewEnvClient()
     if err != nil {
-        fmt.Println(err)
+        panic(err)
     }
-    return string(out)
-}
 
-// TODO : Implement it in Go
-func docker_login(username string, password string) {
-    cmd := exec.Command(
-        "docker",
-        "login",
-        "-u",
-        username,
-        "-p",
-        password,
-    )
-    err := cmd.Run()
+    images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
     if err != nil {
-        fmt.Println(err)
+        panic(err)
     }
+
+    var id string
+
+    for _, image := range images {
+        if image.RepoTags[0] == tag {
+            id = strings.Split(image.ID, ":")[1]
+            if err != nil {
+                panic(err)
+            }
+        }
+    }
+    return id
 }
 
 func DockerBuild(w http.ResponseWriter, r *http.Request) {
@@ -171,21 +142,51 @@ func DockerBuild(w http.ResponseWriter, r *http.Request) {
         log.Fatal(err, " :unable to read image build response")
     }
 
-    deleteFile("Dockerfile")
+    os.Remove("Dockerfile") // Remove the Dockerfile
 }
 
-// TODO : Implement it in Go
-func docker_push(tag string) {
-    var docker_creds = get_docker_creds()
-    docker_login(docker_creds["username"], docker_creds["password"])
-
-    cmd := exec.Command(
-        "docker",
-        "push",
-        get_docker_image_id(tag),
-    )
-    err := cmd.Run()
+func dockerPush(w http.ResponseWriter, r *http.Request) {
+    body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
     if err != nil {
-        fmt.Println(err)
+        panic(err)
     }
+    defer r.Body.Close()
+
+    m := make(map[string]string)
+    json.Unmarshal(body, &m)
+
+    ctx := context.Background()
+    cli, err := client.NewEnvClient()
+    if err != nil {
+        panic(err)
+    }
+
+    if os.Getenv("DOCKER_USERNAME") == "" || os.Getenv("DOCKER_PASSWORD") == "" {
+        w.WriteHeader(http.StatusUnauthorized)
+    }
+    authConfig := types.AuthConfig{
+        Username: os.Getenv("DOCKER_USERNAME"),
+        Password: os.Getenv("DOCKER_PASSWORD"),
+    }
+    encodedJSON, err := json.Marshal(authConfig)
+    if err != nil {
+        panic(err)
+    }
+    authStr := base64.URLEncoding.EncodeToString(encodedJSON)
+
+    imagePushResponse, err := cli.ImagePush(
+        ctx,
+        m["tag"],
+        types.ImagePushOptions{
+            RegistryAuth: authStr,
+            })
+    if err != nil {
+        log.Fatal(err, " :unable to build docker image")
+    }
+    _, err = io.Copy(os.Stdout, imagePushResponse)
+    if err != nil {
+        log.Fatal(err, " :unable to read image build response")
+    }
+    defer imagePushResponse.Close()
+    w.WriteHeader(http.StatusCreated)
 }
