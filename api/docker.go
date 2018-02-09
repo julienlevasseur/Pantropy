@@ -1,5 +1,7 @@
 package main
 
+// TODO : Add tests for docker routes
+
 import (
     "io"
     "os"
@@ -48,12 +50,6 @@ func deleteFile(path string) {
     os.Remove(path)
 }
 
-/*func tarFile(files []string) {
-    for _, file := range files  {
-        cmd := exec.Command(
-    }
-}*/
-
 func get_docker_creds() map[string]string {
     var docker_creds = map[string]string{
         "username": os.Getenv("DOCKER_USERNAME"),
@@ -62,6 +58,26 @@ func get_docker_creds() map[string]string {
     return docker_creds
 }
 
+func dockerImageList(w http.ResponseWriter, r *http.Request) {
+    cli, err := client.NewEnvClient()
+    if err != nil {
+        panic(err)
+    }
+
+    images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
+    if err != nil {
+        panic(err)
+    }
+
+    //for _, image := range images {
+    //    fmt.Println(image.ID)
+    //}
+    if err := json.NewEncoder(w).Encode(images); err != nil {
+        panic(err)
+    }
+}
+
+// TODO : Implement it in Go
 func get_docker_image_id(tag string) string {
     out, err := exec.Command(
         "docker",
@@ -76,6 +92,7 @@ func get_docker_image_id(tag string) string {
     return string(out)
 }
 
+// TODO : Implement it in Go
 func docker_login(username string, password string) {
     cmd := exec.Command(
         "docker",
@@ -157,6 +174,7 @@ func DockerBuild(w http.ResponseWriter, r *http.Request) {
     deleteFile("Dockerfile")
 }
 
+// TODO : Implement it in Go
 func docker_push(tag string) {
     var docker_creds = get_docker_creds()
     docker_login(docker_creds["username"], docker_creds["password"])

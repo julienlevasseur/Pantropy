@@ -69,6 +69,12 @@ var routes = []Route{
 		JSON2Hcl,
 	},
 	Route{
+		"DockerImageList",
+		"GET",
+		"/v1/docker/images",
+		dockerImageList,
+	},
+	Route{
 		"DockerBuild",
 		"POST",
 		"/v1/docker/build",
