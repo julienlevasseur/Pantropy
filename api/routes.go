@@ -21,21 +21,39 @@ var routes = []Route{
 		Index,
 	},
 	Route{
+		"Infra",
+		"GET",
+		"/v1/infra",
+		InfraRoutes,
+	},
+	Route{
+		"Infra",
+		"GET",
+		"/v1/app",
+		AppRoutes,
+	},
+	Route{
+		"Infra",
+		"GET",
+		"/v1/app/docker",
+		DockerRoutes,
+	},
+	Route{
 		"Providers",
 		"GET",
-		"/v1/providers",
+		"/v1/infra/providers",
 		ProvidersIndex,
 	},
 	Route{
 		"ProvidersAWS",
 		"GET",
-		"/v1/providers/aws",
+		"/v1/infra/providers/aws",
 		ProvidersAWS,
 	},
 	Route{
 		"ResourceAWS",
 		"GET",
-		"/v1/providers/aws/{ResourceName}",
+		"/v1/infra/providers/aws/{ResourceName}",
 		ResourceAWS,
 	},
 	Route{
@@ -53,13 +71,13 @@ var routes = []Route{
 	Route{
 		"ProvidersOpenstack",
 		"GET",
-		"/v1/providers/openstack",
+		"/v1/infra/providers/openstack",
 		ProvidersOpenstack,
 	},
 	Route{
 		"ResourceOpenstack",
 		"GET",
-		"/v1/providers/openstack/{ResourceName}",
+		"/v1/infra/providers/openstack/{ResourceName}",
 		ResourceOpenstack,
 	},
 	Route{

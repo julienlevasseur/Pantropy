@@ -18,12 +18,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // ProvidersIndex : Define the providers index fuction
 func ProvidersIndex(w http.ResponseWriter, r *http.Request) {
-	// Actually, the only two supported providers are : aws, chef
-	providers := []Provider{
-		Provider{Name: "aws"},
-		Provider{Name: "chef"},
-		Provider{Name: "openstack"},
-	}
+
+	var providers [3]string
+	providers[0] = "aws"
+	providers[1] = "chef"
+	providers[2] = "openstack"
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)

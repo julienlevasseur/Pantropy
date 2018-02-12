@@ -17,9 +17,9 @@ func RouterProvTest(route string, method string) *mux.Router {
 }
 
 func TestProvidersAWS(t *testing.T) {
-	request, _ := http.NewRequest("GET", "/v1/providers/aws", nil)
+	request, _ := http.NewRequest("GET", "/v1/infra/providers/aws", nil)
 	response := httptest.NewRecorder()
-	RouterProvTest("/v1/providers/aws", "GET").ServeHTTP(response, request)
+	RouterProvTest("/v1/infra/providers/aws", "GET").ServeHTTP(response, request)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
 	if response.Code == http.StatusOK {
 		displayStatusOK("ProvidersAWS", response.Code)
@@ -45,9 +45,9 @@ func RouterResAWSTest(route string, method string) *mux.Router {
 }
 
 func TestResAWS(t *testing.T) {
-	request, _ := http.NewRequest("GET", "/v1/providers/aws/aws_instance", nil)
+	request, _ := http.NewRequest("GET", "/v1/infra/providers/aws/aws_instance", nil)
 	response := httptest.NewRecorder()
-	RouterResAWSTest("/v1/providers/aws/aws_instance", "GET").ServeHTTP(response, request)
+	RouterResAWSTest("/v1/infra/providers/aws/aws_instance", "GET").ServeHTTP(response, request)
 	assert.Equal(t, 200, response.Code, "OK response is expected")
 	if response.Code == http.StatusOK {
 		displayStatusOK("ResourceAWS", response.Code)
