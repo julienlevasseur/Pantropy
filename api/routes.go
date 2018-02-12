@@ -71,19 +71,19 @@ var routes = []Route{
 	Route{
 		"DockerImageList",
 		"GET",
-		"/v1/docker/images",
+		"/v1/app/docker/images",
 		dockerImageList,
 	},
 	Route{
 		"DockerBuild",
 		"POST",
-		"/v1/docker/build",
+		"/v1/app/docker/build",
 		DockerBuild,
 	},
 	Route{
 		"DockerPush",
 		"POST",
-		"/v1/docker/push",
+		"/v1/app/docker/push",
 		dockerPush,
 	},
 }

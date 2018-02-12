@@ -44,7 +44,7 @@ Include `image id` in the body:
 
 ```
 {
-	"image_id": "image_id"
+	"tag": "owner/image_name:version"
 }
 ```
 
