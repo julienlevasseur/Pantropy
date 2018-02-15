@@ -1,5 +1,7 @@
 package main
 
+// CTRL + p + q to quit a attached Docker container without killing it.
+
 import (
     "os"
     "log"
@@ -17,16 +19,30 @@ func DockerCreate() string {
         panic(err)
     }
 
-    _, err = cli.ImagePull(ctx, "docker.io/library/alpine", types.ImagePullOptions{})
+    _, err = cli.ImagePull(
+        ctx,
+        "docker.io/library/alpine",
+        types.ImagePullOptions{},
+    )
     if err != nil {
         panic(err)
     }
 
-    resp, err := cli.ContainerCreate(ctx, &container.Config{
-        Image: "alpine",
-        Cmd:   []string{"/bin/sh"},
-        Tty: true,
-    }, nil, nil, "")
+    resp, err := cli.ContainerCreate(
+        ctx,
+        &container.Config{
+            Image:          "alpine",
+            Cmd:            []string{"/bin/sh"},
+            Tty:            true,
+            OpenStdin:      true,
+            StdinOnce:      false,
+        },
+        &container.HostConfig{
+            NetworkMode:    "host",
+        },
+        nil,
+        "",
+    )
     if err != nil {
         panic(err)
     }
@@ -35,6 +51,28 @@ func DockerCreate() string {
         panic(err)
     }
 
+    return resp.ID[0:12]
+}
+
+func DockerCommit(containerID string, containerRef string) {
+    ctx := context.Background()
+    cli, err := client.NewEnvClient()
+    if err != nil {
+        panic(err)
+    }
+
+    Resp, err := cli.ContainerCommit(
+        ctx,
+        containerID,
+        types.ContainerCommitOptions{
+            Reference: containerRef,
+        },
+    )
+    if err != nil {
+        panic(err)
+    }
+
+    //log.Println(Resp.ID[0:12])
     return resp.ID[0:12]
 }
 
@@ -63,6 +101,10 @@ func main() {
             containerID := DockerCreate()
             //DockerAttach(containerID)
             log.Println(containerID)
+        } else if os.Args[1] == "build" {
+            if os.Args[2] != "" && os.Args[3] != "" {
+                DockerCommit(os.Args[2], os.Args[3])
+            }
         }
     }
 }
