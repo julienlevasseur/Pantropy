@@ -2,9 +2,9 @@ package main
 
 import (
 	//"reflect"
-	"testing"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 	//"github.com/gorilla/mux"
 	//"github.com/fatih/color"
 	"github.com/stretchr/testify/assert"

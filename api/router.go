@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 // NewRouter handle the routing for the api

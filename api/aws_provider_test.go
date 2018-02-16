@@ -1,13 +1,13 @@
 package main
 
 import (
-	"reflect"
-	"testing"
+	"github.com/fatih/color"
+	"github.com/gorilla/mux"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"github.com/gorilla/mux"
-	"github.com/fatih/color"
-	"github.com/stretchr/testify/assert"
+	"reflect"
+	"testing"
 )
 
 func RouterProvTest(route string, method string) *mux.Router {

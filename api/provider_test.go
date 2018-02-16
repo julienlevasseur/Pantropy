@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/fatih/color"
 	"reflect"
 	"testing"
-	"github.com/fatih/color"
 )
 
 func TestProviders(t *testing.T) {

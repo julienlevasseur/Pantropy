@@ -1,10 +1,10 @@
 package main
 
 import (
-	"io"
-	"io/ioutil"
 	"github.com/hashicorp/hcl/hcl/printer"
 	jsonParser "github.com/hashicorp/hcl/json/parser"
+	"io"
+	"io/ioutil"
 	"net/http"
 )
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 )
 
 // main function that instantiate a router for the REST routes handling

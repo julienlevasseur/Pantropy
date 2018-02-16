@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 )
 
 // Index : Define the index fuction
@@ -20,9 +20,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func ProvidersIndex(w http.ResponseWriter, r *http.Request) {
 	// Actually, the only two supported providers are : aws, chef
 	providers := []Provider{
-		Provider{Name: "aws"},
-		Provider{Name: "chef"},
-		Provider{Name: "openstack"},
+		{Name: "aws"},
+		{Name: "chef"},
+		{Name: "openstack"},
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

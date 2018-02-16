@@ -3,98 +3,97 @@ package main
 // CTRL + p + q to quit a attached Docker container without killing it.
 
 import (
-    "os"
-    "fmt"
-    //"log"
+	"fmt"
+	"os"
+	//"log"
 
-    "github.com/urfave/cli"
+	"github.com/urfave/cli"
 
-    "github.com/docker/docker/api/types"
-    "github.com/docker/docker/api/types/container"
-    "github.com/docker/docker/client"
-    "golang.org/x/net/context"
-
-    //"time"
-    //"github.com/yhat/go-docker"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/client"
+	"golang.org/x/net/context"
+	//"time"
+	//"github.com/yhat/go-docker"
 )
 
 func DockerCreate() string {
-    ctx := context.Background()
-    cli, err := client.NewEnvClient()
-    if err != nil {
-        panic(err)
-    }
+	ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		panic(err)
+	}
 
-    _, err = cli.ImagePull(
-        ctx,
-        "docker.io/library/alpine",
-        types.ImagePullOptions{},
-    )
-    if err != nil {
-        panic(err)
-    }
+	_, err = cli.ImagePull(
+		ctx,
+		"docker.io/library/alpine",
+		types.ImagePullOptions{},
+	)
+	if err != nil {
+		panic(err)
+	}
 
-    resp, err := cli.ContainerCreate(
-        ctx,
-        &container.Config{
-            Image:          "alpine",
-            Cmd:            []string{"/bin/sh"},
-            Tty:            true,
-            OpenStdin:      true,
-            StdinOnce:      false,
-        },
-        &container.HostConfig{
-            NetworkMode:    "host",
-        },
-        nil,
-        "",
-    )
-    if err != nil {
-        panic(err)
-    }
+	resp, err := cli.ContainerCreate(
+		ctx,
+		&container.Config{
+			Image:     "alpine",
+			Cmd:       []string{"/bin/sh"},
+			Tty:       true,
+			OpenStdin: true,
+			StdinOnce: false,
+		},
+		&container.HostConfig{
+			NetworkMode: "host",
+		},
+		nil,
+		"",
+	)
+	if err != nil {
+		panic(err)
+	}
 
-    /*if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-        panic(err)
-    }*/
+	/*if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
+	    panic(err)
+	}*/
 
-    return resp.ID[0:12]
+	return resp.ID[0:12]
 }
 
 func DockerCommit(containerID string, containerRef string) string {
-    ctx := context.Background()
-    cli, err := client.NewEnvClient()
-    if err != nil {
-        panic(err)
-    }
+	ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		panic(err)
+	}
 
-    resp, err := cli.ContainerCommit(
-        ctx,
-        containerID,
-        types.ContainerCommitOptions{
-            Reference: containerRef,
-        },
-    )
-    if err != nil {
-        panic(err)
-    }
+	resp, err := cli.ContainerCommit(
+		ctx,
+		containerID,
+		types.ContainerCommitOptions{
+			Reference: containerRef,
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
 
-    //log.Println(Resp.ID[0:12])
-    return resp.ID[0:12]
+	//log.Println(Resp.ID[0:12])
+	return resp.ID[0:12]
 }
 
 func DockerStart(containerID string) {
-    ctx := context.Background()
-    cli, err := client.NewEnvClient()
-    if err != nil {
-        panic(err)
-    }
-    if err := cli.ContainerStart(
-        ctx,
-        containerID,
-        types.ContainerStartOptions{},
-    ); err != nil {
-        panic(err)
-    }
+	ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		panic(err)
+	}
+	if err := cli.ContainerStart(
+		ctx,
+		containerID,
+		types.ContainerStartOptions{},
+	); err != nil {
+		panic(err)
+	}
 }
 
 /*func main() {
@@ -183,58 +182,58 @@ func DockerStart(containerID string) {
 }*/
 
 func DockerRemove(containerID string) {
-    //ctx := context.Background()
-    cli, err := client.NewEnvClient()
-    if err != nil {
-        panic(err)
-    }
-    cli.ContainerRemove(
-        context.Background(),
-        containerID,
-        types.ContainerRemoveOptions{
-            RemoveVolumes: true,
-            Force:         true,
-        },
-    )
+	//ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		panic(err)
+	}
+	cli.ContainerRemove(
+		context.Background(),
+		containerID,
+		types.ContainerRemoveOptions{
+			RemoveVolumes: true,
+			Force:         true,
+		},
+	)
 }
 
 func main() {
-  app := cli.NewApp()
-  app.Name = "pan"
-  app.Usage = "fight the loneliness!"
+	app := cli.NewApp()
+	app.Name = "pan"
+	app.Usage = "fight the loneliness!"
 
-  app.Commands = []cli.Command{
-    {
-        Name: "dev",
-        Aliases: []string{"dev"},
-        Usage: "options for dev environment",
-        Subcommands: []cli.Command{
-            {
-                Name: "add",
-                Usage: "create a new dev environment",
-                Action: func(c *cli.Context) error {
-                    /*if err := Test(); err != nil {
-                        panic(err)
-                    }*/
-                    containerID := DockerCreate()
-                    //DockerAttach(containerID)
-                    DockerStart(containerID)
-                    fmt.Println("New dev container created: " + containerID)
-                    return nil
-                },
-            },
-            {
-                Name: "rm",
-                Usage: "delete a dev environment",
-                Action: func(c *cli.Context) error {
-                    DockerRemove(c.Args().First())
-                    fmt.Println("Deleted dev container: " + c.Args().First())
-                    return nil
-                },
-            },
-        },
-    },
-  }
+	app.Commands = []cli.Command{
+		{
+			Name:    "dev",
+			Aliases: []string{"dev"},
+			Usage:   "options for dev environment",
+			Subcommands: []cli.Command{
+				{
+					Name:  "add",
+					Usage: "create a new dev environment",
+					Action: func(c *cli.Context) error {
+						/*if err := Test(); err != nil {
+						    panic(err)
+						}*/
+						containerID := DockerCreate()
+						//DockerAttach(containerID)
+						DockerStart(containerID)
+						fmt.Println("New dev container created: " + containerID)
+						return nil
+					},
+				},
+				{
+					Name:  "rm",
+					Usage: "delete a dev environment",
+					Action: func(c *cli.Context) error {
+						DockerRemove(c.Args().First())
+						fmt.Println("Deleted dev container: " + c.Args().First())
+						return nil
+					},
+				},
+			},
+		},
+	}
 
-  app.Run(os.Args)
+	app.Run(os.Args)
 }

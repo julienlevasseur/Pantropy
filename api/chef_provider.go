@@ -1,109 +1,109 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 var chefResources = map[string]Resource{
-	"chef_data_bag": Resource{
+	"chef_data_bag": {
 		Name: "chef_data_bag",
 		Arguments: []Argument{
-			Argument{
-				Name: "name",
+			{
+				Name:     "name",
 				Required: true,
 			},
 		},
 	},
-	"chef_data_bag_item": Resource{
+	"chef_data_bag_item": {
 		Name: "chef_data_bag_item",
 		Arguments: []Argument{
-			Argument{
-				Name: "name",
+			{
+				Name:     "name",
 				Required: true,
 			},
-			Argument{
-				Name: "content_json",
+			{
+				Name:     "content_json",
 				Required: true,
 			},
 		},
 	},
-	"chef_environment": Resource{
+	"chef_environment": {
 		Name: "chef_environment",
 		Arguments: []Argument{
-			Argument{
-				Name: "name",
+			{
+				Name:     "name",
 				Required: true,
 			},
-			Argument{
-				Name: "description",
+			{
+				Name:     "description",
 				Required: false,
 			},
-			Argument{
-				Name: "default_attributes_json",
+			{
+				Name:     "default_attributes_json",
 				Required: false,
 			},
-			Argument{
-				Name: "override_attributes_json",
+			{
+				Name:     "override_attributes_json",
 				Required: false,
 			},
-			Argument{
-				Name: "cookbook_constraints",
+			{
+				Name:     "cookbook_constraints",
 				Required: false,
 			},
 		},
 	},
-	"chef_node": Resource{
+	"chef_node": {
 		Name: "chef_node",
 		Arguments: []Argument{
-			Argument{
-				Name: "name",
+			{
+				Name:     "name",
 				Required: true,
 			},
-			Argument{
-				Name: "automatic_attributes_json",
+			{
+				Name:     "automatic_attributes_json",
 				Required: false,
 			},
-			Argument{
-				Name: "normal_attributes_json ",
+			{
+				Name:     "normal_attributes_json ",
 				Required: false,
 			},
-			Argument{
-				Name: "default_attributes_json ",
+			{
+				Name:     "default_attributes_json ",
 				Required: false,
 			},
-			Argument{
-				Name: "override_attributes_json",
+			{
+				Name:     "override_attributes_json",
 				Required: false,
 			},
-			Argument{
-				Name: "run_list",
+			{
+				Name:     "run_list",
 				Required: false,
 			},
 		},
 	},
-	"chef_role": Resource{
+	"chef_role": {
 		Name: "chef_role",
 		Arguments: []Argument{
-			Argument{
-				Name: "name",
+			{
+				Name:     "name",
 				Required: true,
 			},
-			Argument{
-				Name: "description",
+			{
+				Name:     "description",
 				Required: false,
 			},
-			Argument{
-				Name: "default_attributes_json ",
+			{
+				Name:     "default_attributes_json ",
 				Required: false,
 			},
-			Argument{
-				Name: "override_attributes_json",
+			{
+				Name:     "override_attributes_json",
 				Required: false,
 			},
-			Argument{
-				Name: "run_list",
+			{
+				Name:     "run_list",
 				Required: false,
 			},
 		},
