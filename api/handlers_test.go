@@ -1,11 +1,11 @@
 package main
 
 import (
-	"testing"
-	"net/http"
-	"net/http/httptest"
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 )
 
 func RouterIndexTest(route string, method string) *mux.Router {

@@ -6,9 +6,9 @@ import (
 
 // Route definition
 type Route struct {
-	Name		string
-	Method		string
-	Pattern		string `json:"pattern"`
+	Name        string
+	Method      string
+	Pattern     string `json:"pattern"`
 	HandlerFunc http.HandlerFunc
 }
 
