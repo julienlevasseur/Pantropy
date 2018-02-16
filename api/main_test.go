@@ -1,11 +1,10 @@
 package main
 
 import (
+	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
-
 
 func TestMain(t *testing.T) {
 	router := NewRouter()

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"reflect"
-	"testing"
+	"github.com/fatih/color"
+	"github.com/gorilla/mux"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"github.com/gorilla/mux"
-	"github.com/fatih/color"
-	"github.com/stretchr/testify/assert"
+	"reflect"
+	"testing"
 )
 
 func RouterOSProvTest(route string, method string) *mux.Router {
@@ -26,16 +26,16 @@ func TestProvidersOS(t *testing.T) {
 	}
 
 	defer func() {
-        if r := recover(); r == nil {
-            t.Errorf("ProvidersOpenstack did not panic")
-        } else {
-        	PrintGreen("[OK] ProvidersOpenstack panic correctly")
-        }
-    }()
+		if r := recover(); r == nil {
+			t.Errorf("ProvidersOpenstack did not panic")
+		} else {
+			PrintGreen("[OK] ProvidersOpenstack panic correctly")
+		}
+	}()
 
-    var w http.ResponseWriter
-    var r *http.Request
-    ProvidersOpenstack(w, r)
+	var w http.ResponseWriter
+	var r *http.Request
+	ProvidersOpenstack(w, r)
 }
 
 func RouterResOSTest(route string, method string) *mux.Router {
@@ -64,14 +64,14 @@ func TestResOS(t *testing.T) {
 	}
 
 	defer func() {
-        if r := recover(); r == nil {
-            t.Errorf("ResourceOpenstack did not panic")
-        } else {
-        	PrintGreen("[OK] ResourceOpenstack panic correctly")
-        }
-    }()
+		if r := recover(); r == nil {
+			t.Errorf("ResourceOpenstack did not panic")
+		} else {
+			PrintGreen("[OK] ResourceOpenstack panic correctly")
+		}
+	}()
 
-    var w http.ResponseWriter
-    var r *http.Request
-    ResourceOpenstack(w, r)
+	var w http.ResponseWriter
+	var r *http.Request
+	ResourceOpenstack(w, r)
 }

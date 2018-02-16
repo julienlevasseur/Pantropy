@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"strings"
-	"testing"
+	"github.com/fatih/color"
 	"net/http"
 	"net/http/httptest"
-	"github.com/fatih/color"
+	"strings"
+	"testing"
 )
 
 func TestIndexRoute(t *testing.T) {
@@ -19,7 +19,6 @@ func TestIndexRoute(t *testing.T) {
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(Index)
 	handler.ServeHTTP(rr, req)
-
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf(color.RedString("index route returned wrong status code: got %v want %v"),
