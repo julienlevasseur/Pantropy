@@ -1,1 +1,5 @@
 api/api
+pan/.kitchen.yml
+pan/.kitchen/
+pan/.vagrant/
+pan/pan
